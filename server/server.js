@@ -23,7 +23,7 @@ const  bookingRouter  = require('./routes/bookingRoutes.js');
 
 const app=express()
 app.use(cors()) //Enables cross-origin resource sharing
-app.use('/api/clerk', bodyParser.raw({ type: 'application/json' }));
+app.post('/api/clerk', bodyParser.raw({ type: 'application/json' }), clerkWebHooks);
 
 // Middleware
 app.use(express.json())
