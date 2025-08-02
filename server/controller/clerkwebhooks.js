@@ -14,6 +14,7 @@ const clerkWebHooks = async (req, res) => {
     // Verify
     const payload = req.body; // already a Buffer
     const evt = await whook.verify(payload, headers); // ✅ correct
+    console.log("✅ Verified event:", evt);
     const { data, type } = evt;
 
 
@@ -26,7 +27,16 @@ const clerkWebHooks = async (req, res) => {
     // Switch  case for different events
     switch (type) {
       case "user.created": {
-        await User.create(userData);
+        // await User.create(userData);
+        // break;
+
+        console.log("📦 Creating user:", userData); // 👈 Log user data
+        try {
+          await User.create(userData);
+          console.log("✅ User added to DB");
+        } catch (err) {
+          console.error("❌ DB error:", err.message);
+        }
         break;
       }
       case "user.updated": {
